@@ -1,0 +1,2 @@
+wildfly admin page localhost:9990
+username: admin password: admin
