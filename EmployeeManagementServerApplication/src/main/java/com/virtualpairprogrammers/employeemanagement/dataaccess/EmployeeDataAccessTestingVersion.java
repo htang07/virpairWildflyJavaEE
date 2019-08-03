@@ -8,7 +8,7 @@ import javax.ejb.Stateless;
 import com.virtualpairprogrammers.employeemanagement.domain.Employee;
 
 @Stateless
-public class EmployeeDataAccessImplementation implements EmployeeDataAccess {
+public class EmployeeDataAccessTestingVersion implements EmployeeDataAccess {
 
 	@Override
 	public void insert(Employee newEmployee) {
