@@ -1,1 +1,3 @@
 ---install wildfly plugin to eclipse
+
+---export as jar file wildfly can automatically recongize contents of ejbs if exist
