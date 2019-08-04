@@ -1,0 +1,8 @@
+---DuplicateServiceException JBoss Server
+eclipse wildfly plugin doesn't remove existing artifacts(war/jar/ear) correctly
+solution: remove artifacts within <root-path>wildfly-10.1.0.Final\standalone\deployments
+then start wildfly log into admin webconsole and remove artifacts from deployment
+After all of the above run artifact on server in eclipse shouldn't run into exception
+
+
+???wildfly debug port 8787???

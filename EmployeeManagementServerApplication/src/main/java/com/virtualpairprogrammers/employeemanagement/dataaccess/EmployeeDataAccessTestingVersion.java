@@ -5,9 +5,17 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Alternative;
+
 import com.virtualpairprogrammers.employeemanagement.domain.Employee;
 
-@Stateless
+//can remove @stateless annotation to remove its ejb mark and can still be injected correctly
+//@Stateless
+@Alternative
+@TestingDao
+//@SuppressWarnings("serial")
+@RequestScoped
 public class EmployeeDataAccessTestingVersion implements EmployeeDataAccess {
 
 	@Override

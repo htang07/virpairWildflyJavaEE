@@ -1,0 +1,8 @@
+[derby-10.12.1.1]
+---powershell
+windows\...\bin>.\NetworkServerControl.bat -p 50000 start
+
+windows\...\bin>./ij
+ij>connect 'jdbc:derby://localhost:50000/EmployeeManagement;create=true';
+ij>create table temp_table(id int);
+ij>insert into temp_table (id) values(5);
