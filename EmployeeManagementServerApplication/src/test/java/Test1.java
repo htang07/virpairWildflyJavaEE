@@ -52,9 +52,8 @@ public class Test1 {
 			System.out.println(employee);
 		}
 		
-		
 		tx.commit();
-		em.close();
+		em.close(); // must explicitly close entitymanager; it doesn't support java 8 try resource construct
 	}
 
 }

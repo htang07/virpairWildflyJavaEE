@@ -18,7 +18,7 @@ public class Employee implements java.io.Serializable {
 	private String jobRole;
 	private int salary;
 	
-	public Employee() {}
+	public Employee() {} // empty constructor required by jpa
 	public Employee(String firstName, String surname, String jobRole, int salary) {
 		super();
 		this.firstName = firstName;
