@@ -1,0 +1,6 @@
+----add derby/mysql driver to wildfly
+https://www.youtube.com/watch?v=Zfpuc8sHAPQ&feature=youtu.be
+https://synaptiklabs.com/posts/adding-the-mysql-jdbc-driver-into-wildfly/
+within installation direction create the following structure
+<path...>\wildfly-10.1.0.Final\modules\system\layers\base\org\apache\derby\main
+copy and paste derbyclient.jar into main folder and create module.xml inside

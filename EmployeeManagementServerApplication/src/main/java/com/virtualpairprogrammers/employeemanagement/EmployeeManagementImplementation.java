@@ -16,8 +16,8 @@ public class EmployeeManagementImplementation implements
 		EmployeeManagementService {
 	
 	@Inject
-	@TestingDao
-	//@ProductionDao
+	//@TestingDao
+	@ProductionDao
 	private EmployeeDataAccess dao;
 	
 	public EmployeeManagementImplementation() {}
