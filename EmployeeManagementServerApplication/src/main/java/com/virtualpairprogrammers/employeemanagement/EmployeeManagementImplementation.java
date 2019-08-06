@@ -50,6 +50,7 @@ public class EmployeeManagementImplementation implements
 	}
 	/*
 	 * Note: 
+	 * Transactions are automatically rolled back for unchecked exceptions. transaction are not rolled back for checked exceptions
 	 * TransactionAttributeType.REQUIRES_NEW: marked child method creates a brand new transaction
 	 * TransactionAttributeType.NOT_SUPPORTED: mark method doesn't need transaction and suspend parent transaction when running marked child method
 	 * and give you the ability to do database
