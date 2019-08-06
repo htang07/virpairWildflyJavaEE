@@ -14,6 +14,7 @@ import com.virtualpairprogrammers.employeemanagement.domain.Employee;
 @Stateless
 @Default
 @ProductionDao
+//By default, all methods in an EJB are transactional not just persistence layer
 public class EmployeeDataAccessProductionVersion implements EmployeeDataAccess {
 	
 	@PersistenceContext
