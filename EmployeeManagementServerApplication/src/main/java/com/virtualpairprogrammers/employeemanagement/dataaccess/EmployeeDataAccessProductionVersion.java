@@ -21,7 +21,7 @@ public class EmployeeDataAccessProductionVersion implements EmployeeDataAccess {
 	
 	@Override
 	public void insert(Employee newEmployee) {
-		
+		em.persist(newEmployee);
 	}
 
 	@Override
@@ -33,7 +33,9 @@ public class EmployeeDataAccessProductionVersion implements EmployeeDataAccess {
 
 	@Override
 	public List<Employee> findBySurname(String surname) {
-		return null;
+		Query q = em.createQuery("select employee from Employee employee where employee.surname= :surname");
+		q.setParameter("surname", surname);
+		return q.getResultList();
 	}
 
 }

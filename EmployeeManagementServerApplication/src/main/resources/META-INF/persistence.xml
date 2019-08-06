@@ -1,18 +1,24 @@
-<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<persistence
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 	version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
-	
-   <persistence-unit name="employeeDb" transaction-type="RESOURCE_LOCAL">
-         	  
-      <!--  <class>Employee</class>-->
-      <!-- <class>com.virtualpairprogrammers.employeemanagement.domain.Employee</class> -->
-   
-      <properties>		      	      
-            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:50000/EmployeeManagement" />
-            <property name="javax.persistence.jdbc.user" value="APP" />
-            <property name="javax.persistence.jdbc.password" value="APP" />
-            <property name="hibernate.hbm2ddl.auto" value="update" />
-         </properties>
-   </persistence-unit>
+
+	<!-- swith to below if want to use local -->
+	<!-- <persistence-unit name="employeeDb" transaction-type="RESOURCE_LOCAL"> -->
+	<persistence-unit name="employeeDb"
+		transaction-type="JTA">
+		<!-- <class>Employee</class> -->
+		<!-- <class>com.virtualpairprogrammers.employeemanagement.domain.Employee</class> -->
+		<!-- below sets auto-transaction on -->
+		<jta-data-source>java:/EmployeeDatabase</jta-data-source>
+		<properties>
+			<!-- below commented out because it conflicts with wildfly, wildfly will 
+				provide those information. Uncomment to unit test standalone -->
+			<!-- <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver" 
+				/> <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:50000/EmployeeManagement" 
+				/> <property name="javax.persistence.jdbc.user" value="APP" /> <property 
+				name="javax.persistence.jdbc.password" value="APP" /> -->
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+		</properties>
+	</persistence-unit>
 </persistence>

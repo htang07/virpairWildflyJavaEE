@@ -21,12 +21,21 @@ public class TestClientMain {
 		Context jndi = new InitialContext(jndiProperties);
 		
 		EmployeeManagementService service = (EmployeeManagementService)jndi.lookup("EmployeeManagementServerApplication/EmployeeManagementImplementation!com.virtualpairprogrammers.employeemanagement.EmployeeManagementService");
-		
+//		Employee employee1 = new Employee("Mike","Thomas","Engineer",1000);
+//		service.registerEmployee(employee1);
+//		Employee emp1 = new Employee("Sophie","Green","Artist",1700);
+//		Employee emp2 = new Employee("Ronald", "Smith", "Conductor", 1900);
+//		Employee emp3 = new Employee("Eric", "Jones", "Pianist", 2000);
+//		service.registerEmployee(emp1);
+//		service.registerEmployee(emp2);
+//		service.registerEmployee(emp3);
+//		System.out.println("find by surname: " + service.searchBySurname("Green"));
+//		System.out.println("****************************************");
 		List<Employee> employees = service.getAllEmployees();
 		for (Employee employee: employees) {
 			System.out.println(employee);
 		}
-
+		
 	}
 
 }

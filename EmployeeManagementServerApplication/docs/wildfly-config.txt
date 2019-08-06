@@ -4,3 +4,14 @@ https://synaptiklabs.com/posts/adding-the-mysql-jdbc-driver-into-wildfly/
 within installation direction create the following structure
 <path...>\wildfly-10.1.0.Final\modules\system\layers\base\org\apache\derby\main
 copy and paste derbyclient.jar into main folder and create module.xml inside
+
+----enable datasource
+ <datasource jndi-name="java:/EmployeeDatabase" pool-name="EmployeeDatabase" enabled="true" use-java-context="false">
+                    <connection-url>jdbc:derby://localhost:50000/EmployeeManagement</connection-url>
+                    <driver>derby</driver>
+                    <security>
+                        <user-name>APP</user-name>
+                        <password>APP</password>
+                    </security>
+
+                </datasource>
