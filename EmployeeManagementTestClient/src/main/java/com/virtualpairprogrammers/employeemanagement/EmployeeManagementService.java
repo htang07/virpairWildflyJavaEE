@@ -11,4 +11,5 @@ public interface EmployeeManagementService {
 	public void registerEmployee(Employee employee);
 	public List<Employee> getAllEmployees();
 	public List<Employee> searchBySurname(String surname);
+	public void enrollEmployeeHandleRollback(Employee employee);
 }

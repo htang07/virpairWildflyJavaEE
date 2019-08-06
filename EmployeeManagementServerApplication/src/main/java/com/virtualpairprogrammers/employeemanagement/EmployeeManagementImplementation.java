@@ -3,6 +3,8 @@ package com.virtualpairprogrammers.employeemanagement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -23,6 +25,12 @@ public class EmployeeManagementImplementation implements
 	@ProductionDao
 	private EmployeeDataAccess dao;
 	
+	@Inject
+	private ExternalPayrollSystem payrollSystem;
+	
+	@Resource
+	private SessionContext ctx;
+	
 	public EmployeeManagementImplementation() {}
 	
 	@Override
@@ -39,6 +47,8 @@ public class EmployeeManagementImplementation implements
 	public List<Employee> searchBySurname(String surname) {
 		return dao.findBySurname(surname);
 	}
+	
+	
 	
 //	//following propogation rule marking method to support existing transaction created by caller stack top level in a chain 
 //	//but not to create a new transaction (a transaction is not needed)
@@ -62,5 +72,15 @@ public class EmployeeManagementImplementation implements
 	 * TransactionAttributeType.REQUIRED: default for EJB meaning that a transaction will created if it's the first item in the chain or it 
 	 * there's on in its parent then it will use that parent's transaction
 	 */
+
+	@Override
+	public void enrollEmployeeHandleRollback(Employee employee) throws ServiceUnavailableException {
+		try {
+			payrollSystem.enrollEmployee(employee);
+		} catch (Exception e) {
+			System.out.println("Something went wrong");
+			ctx.setRollbackOnly();
+		}
+	}
 
 }
