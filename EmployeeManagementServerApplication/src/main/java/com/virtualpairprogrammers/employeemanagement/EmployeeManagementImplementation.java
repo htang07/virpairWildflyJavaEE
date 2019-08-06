@@ -75,12 +75,15 @@ public class EmployeeManagementImplementation implements
 
 	@Override
 	public void enrollEmployeeHandleRollback(Employee employee) throws ServiceUnavailableException {
-		try {
-			payrollSystem.enrollEmployee(employee);
-		} catch (Exception e) {
-			System.out.println("Something went wrong");
-			ctx.setRollbackOnly();
-		}
+		payrollSystem.enrollEmployee(employee);
+		//commented out for using alternative approach which is to annotate rollback on Exception class (ServiceUnavailableException for ex)
+//		try {
+//			payrollSystem.enrollEmployee(employee);
+//		} catch (Exception e) {
+//			System.out.println("Something went wrong");
+//			ctx.setRollbackOnly();
+//			throw e;
+//		}
 	}
 
 }
