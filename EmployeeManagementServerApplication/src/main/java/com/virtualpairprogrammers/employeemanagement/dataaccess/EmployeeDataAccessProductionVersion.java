@@ -39,4 +39,10 @@ public class EmployeeDataAccessProductionVersion implements EmployeeDataAccess {
 		return q.getResultList();
 	}
 
+	@Override
+	public Employee findById(int id) {
+		Query q = em.createQuery("select employee from Employee employee where employee.id = :id");
+		q.setParameter("id", id);
+		return (Employee)q.getSingleResult();	}
+
 }

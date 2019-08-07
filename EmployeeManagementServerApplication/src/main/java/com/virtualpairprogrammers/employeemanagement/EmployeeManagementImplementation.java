@@ -18,7 +18,7 @@ import com.virtualpairprogrammers.employeemanagement.domain.Employee;
 @Stateless
 //By default, all methods in an EJB are transactional not just persistence layer
 public class EmployeeManagementImplementation implements
-		EmployeeManagementService {
+		EmployeeManagementService, EmployeeManagementServiceLocal {
 	
 	@Inject
 	//@TestingDao
@@ -84,6 +84,12 @@ public class EmployeeManagementImplementation implements
 //			ctx.setRollbackOnly();
 //			throw e;
 //		}
+	}
+
+	@Override
+	public Employee getById(int id) {
+		
+		return dao.findById(id);
 	}
 
 }

@@ -14,5 +14,7 @@ public interface EmployeeDataAccess {
 	public abstract List<Employee> findAll();
 
 	public abstract List<Employee> findBySurname(String surname);
+	
+	public abstract Employee findById(int id);
 
 }
