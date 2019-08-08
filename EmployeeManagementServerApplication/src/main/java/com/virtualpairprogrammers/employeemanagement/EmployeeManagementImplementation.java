@@ -88,7 +88,6 @@ public class EmployeeManagementImplementation implements
 
 	@Override
 	public Employee getById(int id) {
-		
 		return dao.findById(id);
 	}
 

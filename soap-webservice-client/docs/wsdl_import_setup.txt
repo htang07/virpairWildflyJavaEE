@@ -1,0 +1,3 @@
+
+https://stackoverflow.com/questions/18338196/how-to-generate-classes-from-wsdl-using-maven-and-wsimport
+shell>mvn clean jaxws:wsimport 
