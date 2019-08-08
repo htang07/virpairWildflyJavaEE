@@ -23,4 +23,8 @@ public class EmployeeManagementWebserviceImplementation {
 		return service.getAllEmployees();
 	}
 	
+	public void registerNewEmployee(Employee employee) throws ServiceUnavailableException {
+		service.registerEmployee(employee);
+	}
+	
 }

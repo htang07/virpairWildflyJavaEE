@@ -23,7 +23,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>EmployeeManagementTestClient</finalName>
+		<finalName>RmiEmployeeManagementTestClient</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
