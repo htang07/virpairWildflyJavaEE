@@ -49,4 +49,18 @@ public interface EmployeeManagementWebService {
     @ResponseWrapper(localName = "getAllEmployeesResponse", targetNamespace = "http://employeemanagement.virtualpairprogrammers.com/", className = "generatedclasses.com.virtualpairprogrammers.employeemanagement.GetAllEmployeesResponse")
     public List<Employee> getAllEmployees();
 
+    /**
+     * 
+     * @param arg0
+     * @throws ServiceUnavailableException_Exception
+     */
+    @WebMethod
+    @RequestWrapper(localName = "registerNewEmployee", targetNamespace = "http://employeemanagement.virtualpairprogrammers.com/", className = "generatedclasses.com.virtualpairprogrammers.employeemanagement.RegisterNewEmployee")
+    @ResponseWrapper(localName = "registerNewEmployeeResponse", targetNamespace = "http://employeemanagement.virtualpairprogrammers.com/", className = "generatedclasses.com.virtualpairprogrammers.employeemanagement.RegisterNewEmployeeResponse")
+    public void registerNewEmployee(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Employee arg0)
+        throws ServiceUnavailableException_Exception
+    ;
+
 }

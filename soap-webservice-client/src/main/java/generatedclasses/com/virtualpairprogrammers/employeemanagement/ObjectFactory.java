@@ -27,6 +27,9 @@ public class ObjectFactory {
     private final static QName _GetAllEmployeesResponse_QNAME = new QName("http://employeemanagement.virtualpairprogrammers.com/", "getAllEmployeesResponse");
     private final static QName _GetEmployeeById_QNAME = new QName("http://employeemanagement.virtualpairprogrammers.com/", "getEmployeeById");
     private final static QName _GetEmployeeByIdResponse_QNAME = new QName("http://employeemanagement.virtualpairprogrammers.com/", "getEmployeeByIdResponse");
+    private final static QName _RegisterNewEmployee_QNAME = new QName("http://employeemanagement.virtualpairprogrammers.com/", "registerNewEmployee");
+    private final static QName _RegisterNewEmployeeResponse_QNAME = new QName("http://employeemanagement.virtualpairprogrammers.com/", "registerNewEmployeeResponse");
+    private final static QName _ServiceUnavailableException_QNAME = new QName("http://employeemanagement.virtualpairprogrammers.com/", "ServiceUnavailableException");
     private final static QName _GetAllEmployees_QNAME = new QName("http://employeemanagement.virtualpairprogrammers.com/", "getAllEmployees");
 
     /**
@@ -58,6 +61,30 @@ public class ObjectFactory {
      */
     public GetAllEmployeesResponse createGetAllEmployeesResponse() {
         return new GetAllEmployeesResponse();
+    }
+
+    /**
+     * Create an instance of {@link RegisterNewEmployeeResponse }
+     * 
+     */
+    public RegisterNewEmployeeResponse createRegisterNewEmployeeResponse() {
+        return new RegisterNewEmployeeResponse();
+    }
+
+    /**
+     * Create an instance of {@link RegisterNewEmployee }
+     * 
+     */
+    public RegisterNewEmployee createRegisterNewEmployee() {
+        return new RegisterNewEmployee();
+    }
+
+    /**
+     * Create an instance of {@link ServiceUnavailableException }
+     * 
+     */
+    public ServiceUnavailableException createServiceUnavailableException() {
+        return new ServiceUnavailableException();
     }
 
     /**
@@ -101,6 +128,33 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://employeemanagement.virtualpairprogrammers.com/", name = "getEmployeeByIdResponse")
     public JAXBElement<GetEmployeeByIdResponse> createGetEmployeeByIdResponse(GetEmployeeByIdResponse value) {
         return new JAXBElement<GetEmployeeByIdResponse>(_GetEmployeeByIdResponse_QNAME, GetEmployeeByIdResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RegisterNewEmployee }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://employeemanagement.virtualpairprogrammers.com/", name = "registerNewEmployee")
+    public JAXBElement<RegisterNewEmployee> createRegisterNewEmployee(RegisterNewEmployee value) {
+        return new JAXBElement<RegisterNewEmployee>(_RegisterNewEmployee_QNAME, RegisterNewEmployee.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RegisterNewEmployeeResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://employeemanagement.virtualpairprogrammers.com/", name = "registerNewEmployeeResponse")
+    public JAXBElement<RegisterNewEmployeeResponse> createRegisterNewEmployeeResponse(RegisterNewEmployeeResponse value) {
+        return new JAXBElement<RegisterNewEmployeeResponse>(_RegisterNewEmployeeResponse_QNAME, RegisterNewEmployeeResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ServiceUnavailableException }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://employeemanagement.virtualpairprogrammers.com/", name = "ServiceUnavailableException")
+    public JAXBElement<ServiceUnavailableException> createServiceUnavailableException(ServiceUnavailableException value) {
+        return new JAXBElement<ServiceUnavailableException>(_ServiceUnavailableException_QNAME, ServiceUnavailableException.class, null, value);
     }
 
     /**
