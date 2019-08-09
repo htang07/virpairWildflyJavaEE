@@ -19,12 +19,14 @@ public class EmployeeResource {
 	@Inject
 	private EmployeeManagementServiceLocal service;
 	
+	//http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
 	@GET
 	@Produces("application/XML")
 	public List<Employee> getAllEmployees() {
 		return service.getAllEmployees();
 	}
 	
+	//ex. http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
 	@GET
 	@Produces("application/XML")
 	@Path("{employeeNo}")
