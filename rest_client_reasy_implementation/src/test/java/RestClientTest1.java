@@ -106,5 +106,10 @@ public class RestClientTest1 {
 
 		response.close();
 	}
+	
+	@Test
+	public void testResponseMessageWithHeader() {
+		
+	}
 
 }
