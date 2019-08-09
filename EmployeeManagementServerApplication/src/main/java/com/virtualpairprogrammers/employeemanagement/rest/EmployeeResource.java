@@ -10,6 +10,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 
 import com.virtualpairprogrammers.employeemanagement.EmployeeManagementServiceLocal;
 import com.virtualpairprogrammers.employeemanagement.ServiceUnavailableException;
@@ -24,21 +26,22 @@ public class EmployeeResource {
 	
 	//http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
 	@GET
-	@Produces("application/XML")
+	@Produces(value = {"application/JSON","application/XML"})
 	public List<Employee> getAllEmployees() {
 		return service.getAllEmployees();
 	}
 	
 	//ex. http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
 	@GET
-	@Produces("application/XML")
+	@Produces(value = {"application/JSON","application/XML"})
 	@Path("{employeeNo}")
-	public Employee findEmployeeById(@PathParam("employeeNo") int id) {
+	public Employee findEmployeeById(@PathParam("employeeNo") int id, @Context HttpHeaders headers) {
+		System.out.println("requested headers: " + headers.getRequestHeaders());
 		return service.getById(id);
 	}
 	
 	@POST
-	@Produces("application/XML")
+	@Produces(value = {"application/JSON","application/XML"})
 	@Consumes("application/XML")
 	public Employee createEmployee(Employee employee) {
 		try {

@@ -62,17 +62,18 @@ public class RestClientTest1 {
 	@Test
 	public void testPostEmployee() {
 		Client client = ClientBuilder.newClient();
-	
+
 		Employee jimmy = new Employee();
 		jimmy.setFirstName("Jimmy");
 		jimmy.setSurname("Green");
 		jimmy.setJobRole("Author");
 		jimmy.setSalary(10000);
-		
+
 		Entity jamesEntity = Entity.entity(jimmy, "application/XML");
 
-		Response response = client.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees")
-				.request().buildPost(jamesEntity).invoke();
+		Response response = client
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees").request()
+				.buildPost(jamesEntity).invoke();
 		System.out.println(response.readEntity(Employee.class).toString());
 		response.close();
 	}
@@ -89,6 +90,19 @@ public class RestClientTest1 {
 		for (Employee e : employees) {
 			System.out.println(e);
 		}
+
+		response.close();
+	}
+
+	@Test
+	public void testGetEmployeesJson() {
+		Client client = ClientBuilder.newClient();
+		Response response = client
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees")
+				.request("application/JSON").buildGet().invoke();
+		String result = response.readEntity(String.class); // Note: readEntity most of the time will close connection
+		// except for stream inputstream for example
+		System.out.println(result);// print out json string
 
 		response.close();
 	}
