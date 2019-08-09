@@ -1,0 +1,96 @@
+import static org.junit.Assert.*;
+
+import java.util.List;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.Response;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+public class RestClientTest1 {
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+	}
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+	}
+
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	@Test
+	public void testGetEmployeeById() {
+		Client client = ClientBuilder.newClient();
+		Response response = client
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees/5").request()
+				.buildGet().invoke();
+
+		String result = response.readEntity(String.class); // Note: readEntity most of the time will close connection
+															// except for stream inputstream for example
+		System.out.println(result);// print out xml string
+		response.close();
+//		Employee employee = response.readEntity(Employee.class);
+//		System.out.println(employee);
+	}
+
+	@Test
+	public void testEmployeeRestResource() {
+		Client client = ClientBuilder.newClient();
+		Response response = client
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees/5").request()
+				.buildGet().invoke();
+
+		Employee employee = response.readEntity(Employee.class);
+		System.out.println(employee);
+		response.close();
+	}
+
+	@Test
+	public void testPostEmployee() {
+		Client client = ClientBuilder.newClient();
+	
+		Employee jimmy = new Employee();
+		jimmy.setFirstName("Jimmy");
+		jimmy.setSurname("Green");
+		jimmy.setJobRole("Author");
+		jimmy.setSalary(10000);
+		
+		Entity jamesEntity = Entity.entity(jimmy, "application/XML");
+
+		Response response = client.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees")
+				.request().buildPost(jamesEntity).invoke();
+		System.out.println(response.readEntity(Employee.class).toString());
+		response.close();
+	}
+
+	@Test
+	public void testGetEmployees() {
+		Client client = ClientBuilder.newClient();
+		Response response = client
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees").request()
+				.buildGet().invoke();
+		List<Employee> employees = response.readEntity(new GenericType<List<Employee>>() {
+		});
+
+		for (Employee e : employees) {
+			System.out.println(e);
+		}
+
+		response.close();
+	}
+
+}

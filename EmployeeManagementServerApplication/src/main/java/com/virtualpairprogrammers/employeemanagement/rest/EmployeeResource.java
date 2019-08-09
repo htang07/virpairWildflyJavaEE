@@ -4,12 +4,15 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import com.virtualpairprogrammers.employeemanagement.EmployeeManagementServiceLocal;
+import com.virtualpairprogrammers.employeemanagement.ServiceUnavailableException;
 import com.virtualpairprogrammers.employeemanagement.domain.Employee;
 
 @Stateless
@@ -32,5 +35,17 @@ public class EmployeeResource {
 	@Path("{employeeNo}")
 	public Employee findEmployeeById(@PathParam("employeeNo") int id) {
 		return service.getById(id);
+	}
+	
+	@POST
+	@Produces("application/XML")
+	@Consumes("application/XML")
+	public Employee createEmployee(Employee employee) {
+		try {
+			service.registerEmployee(employee);
+		} catch (ServiceUnavailableException e) {
+			e.printStackTrace();
+		}
+		return employee;
 	}
 }
