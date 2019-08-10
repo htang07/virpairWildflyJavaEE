@@ -36,7 +36,7 @@ public class RestClientTest1 {
 	public void testGetEmployeeById() {
 		Client client = ClientBuilder.newClient();
 		Response response = client
-				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees/5").request()
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees/1").request("application/JSON")
 				.buildGet().invoke();
 
 		String result = response.readEntity(String.class); // Note: readEntity most of the time will close connection
@@ -51,9 +51,25 @@ public class RestClientTest1 {
 	public void testEmployeeRestResource() {
 		Client client = ClientBuilder.newClient();
 		Response response = client
-				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees/5").request()
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees/1").request("application/JSON")
 				.buildGet().invoke();
-
+		
+		System.out.println("headers: \n" + response.getHeaders().toString());
+		System.out.println("status: " + response.getStatus());
+		Employee employee = response.readEntity(Employee.class);
+		System.out.println(employee);
+		response.close();
+	}
+	
+	@Test
+	public void testEmployeeRestResourceExpectingException() {
+		Client client = ClientBuilder.newClient();
+		Response response = client
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees/44").request("application/XML")
+				.buildGet().invoke();
+		
+		System.out.println("headers: \n" + response.getHeaders().toString());
+		System.out.println("status: " + response.getStatus());
 		Employee employee = response.readEntity(Employee.class);
 		System.out.println(employee);
 		response.close();
@@ -82,7 +98,7 @@ public class RestClientTest1 {
 	public void testGetEmployees() {
 		Client client = ClientBuilder.newClient();
 		Response response = client
-				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees").request()
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees").request("application/XML")
 				.buildGet().invoke();
 		List<Employee> employees = response.readEntity(new GenericType<List<Employee>>() {
 		});

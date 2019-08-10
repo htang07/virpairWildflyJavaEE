@@ -12,9 +12,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
 
 import com.virtualpairprogrammers.employeemanagement.EmployeeManagementServiceLocal;
 import com.virtualpairprogrammers.employeemanagement.ServiceUnavailableException;
+import com.virtualpairprogrammers.employeemanagement.dataaccess.EmployeeNotFoundException;
 import com.virtualpairprogrammers.employeemanagement.domain.Employee;
 
 @Stateless
@@ -35,9 +37,19 @@ public class EmployeeResource {
 	@GET
 	@Produces(value = {"application/JSON","application/XML"})
 	@Path("{employeeNo}")
-	public Employee findEmployeeById(@PathParam("employeeNo") int id, @Context HttpHeaders headers) {
+	public Response findEmployeeById(@PathParam("employeeNo") int id, @Context HttpHeaders headers) {
 		System.out.println("requested headers: " + headers.getRequestHeaders());
-		return service.getById(id);
+	
+		try {
+			Employee result = service.getById(id);
+			return Response.ok(result).build();
+		} catch (EmployeeNotFoundException e) {
+			
+			System.out.println(e.getMessage());
+			
+			e.printStackTrace();
+			return Response.status(404).build();
+		}
 	}
 	
 	@POST

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -40,9 +41,19 @@ public class EmployeeDataAccessProductionVersion implements EmployeeDataAccess {
 	}
 
 	@Override
-	public Employee findById(int id) {
+	public Employee findById(int id) throws EmployeeNotFoundException {
 		Query q = em.createQuery("select employee from Employee employee where employee.id = :id");
 		q.setParameter("id", id);
-		return (Employee)q.getSingleResult();	}
+		try {
+			return (Employee)q.getSingleResult();
+		}
+		catch (NoResultException ex) {
+			throw new EmployeeNotFoundException(ex, ex.getStackTrace());
+		}	
+//		catch (Exception ex) {
+//			throw new EmployeeNotFoundException();
+//		}	
+		
+	}
 
 }

@@ -11,6 +11,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import com.virtualpairprogrammers.employeemanagement.dataaccess.EmployeeDataAccess;
+import com.virtualpairprogrammers.employeemanagement.dataaccess.EmployeeNotFoundException;
 import com.virtualpairprogrammers.employeemanagement.dataaccess.ProductionDao;
 import com.virtualpairprogrammers.employeemanagement.dataaccess.TestingDao;
 import com.virtualpairprogrammers.employeemanagement.domain.Employee;
@@ -87,7 +88,7 @@ public class EmployeeManagementImplementation implements
 	}
 
 	@Override
-	public Employee getById(int id) {
+	public Employee getById(int id) throws EmployeeNotFoundException {
 		return dao.findById(id);
 	}
 
