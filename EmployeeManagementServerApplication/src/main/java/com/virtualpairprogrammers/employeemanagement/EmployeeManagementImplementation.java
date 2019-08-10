@@ -92,4 +92,9 @@ public class EmployeeManagementImplementation implements
 		return dao.findById(id);
 	}
 
+	@Override
+	public List<Employee> getAllEmployeesWhereIdBetween(int firstId, int secondId) {
+		return dao.getAllEmployeesWhereIdBetween(firstId,secondId);
+	}
+
 }

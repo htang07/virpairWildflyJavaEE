@@ -1,15 +1,18 @@
 package com.virtualpairprogrammers.employeemanagement.rest;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
@@ -25,6 +28,18 @@ public class EmployeeResource {
 
 	@Inject
 	private EmployeeManagementServiceLocal service;
+	
+	@GET
+	@Produces(value={"application/JSON", "application/XML"})
+	public Response getAllEmployeesWhereIdBetween(@DefaultValue("0") @QueryParam("firstId") Integer firstId, @QueryParam("secondId") Integer secondId) {
+		if (firstId == 0 && secondId == null) {
+			return Response.ok(service.getAllEmployees()).build();
+		}
+		if (firstId != null && secondId != null) {
+			return Response.ok(service.getAllEmployeesWhereIdBetween(firstId, secondId)).build();
+		}
+		return Response.status(400).build();
+	}
 	
 	//http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
 	@GET
@@ -52,15 +67,26 @@ public class EmployeeResource {
 		}
 	}
 	
-	@POST
-	@Produces(value = {"application/JSON","application/XML"})
-	@Consumes("application/XML")
-	public Employee createEmployee(Employee employee) {
-		try {
-			service.registerEmployee(employee);
-		} catch (ServiceUnavailableException e) {
-			e.printStackTrace();
-		}
-		return employee;
-	}
+	
+	//this entry point is covered by getAllEmployeesWhereIdBetween method 
+//	@POST
+//	@Produces({"application/JSON", "application/XML"})
+//	@Consumes(value={"application/JSON", "application/XML"})
+//	public Response createEmployee(Employee employee) {
+//		try {
+//			service.registerEmployee(employee);
+//			
+//			URI uri = null;
+//			try {
+//				uri = new URI("/employees/" + employee.getId());
+//			}
+//			catch (Exception e) {}
+//			
+//			return Response.created(uri).entity(employee).build();
+//		} catch (ServiceUnavailableException e) {
+//			return Response.status(504).build();
+//		}
+//	}
+//	
+
 }

@@ -14,4 +14,5 @@ public interface EmployeeManagementServiceLocal {
 	public List<Employee> getAllEmployees();
 	public List<Employee> searchBySurname(String surname);
 	public Employee getById(int id) throws EmployeeNotFoundException;
+	public List<Employee> getAllEmployeesWhereIdBetween(int firstId, int secondId);
 }

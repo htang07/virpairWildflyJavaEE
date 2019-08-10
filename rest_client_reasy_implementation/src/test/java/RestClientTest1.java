@@ -65,7 +65,7 @@ public class RestClientTest1 {
 	public void testEmployeeRestResourceExpectingException() {
 		Client client = ClientBuilder.newClient();
 		Response response = client
-				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees/44").request("application/XML")
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees/44").request("application/JSON")
 				.buildGet().invoke();
 		
 		System.out.println("headers: \n" + response.getHeaders().toString());
@@ -80,17 +80,22 @@ public class RestClientTest1 {
 		Client client = ClientBuilder.newClient();
 
 		Employee jimmy = new Employee();
-		jimmy.setFirstName("Jimmy");
-		jimmy.setSurname("Green");
-		jimmy.setJobRole("Author");
+		jimmy.setFirstName("Annie");
+		jimmy.setSurname("Blue");
+		jimmy.setJobRole("Reporter");
 		jimmy.setSalary(10000);
 
 		Entity jamesEntity = Entity.entity(jimmy, "application/XML");
 
 		Response response = client
-				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees").request()
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees").request("application/XML")
 				.buildPost(jamesEntity).invoke();
-		System.out.println(response.readEntity(Employee.class).toString());
+		
+		System.out.println("headers: \n" + response.getHeaders().toString());
+		System.out.println("status: " + response.getStatus());
+		
+		if(response.getStatus()==201)
+			System.out.println(response.readEntity(Employee.class).toString());
 		response.close();
 	}
 
@@ -121,6 +126,7 @@ public class RestClientTest1 {
 		System.out.println(result);// print out json string
 
 		response.close();
+		
 	}
 	
 	@Test
