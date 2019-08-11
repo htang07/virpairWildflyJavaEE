@@ -52,4 +52,16 @@ public class EmployeeDataAccessTestingVersion implements EmployeeDataAccess {
 		return null;
 	}
 
+	@Override
+	public void updateEmployee(int id, String jobRole, int salary) throws EmployeeNotFoundException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteEmployee(int id) throws EmployeeNotFoundException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

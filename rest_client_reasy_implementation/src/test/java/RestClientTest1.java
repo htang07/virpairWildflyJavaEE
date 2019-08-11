@@ -48,7 +48,7 @@ public class RestClientTest1 {
 	}
 
 	@Test
-	public void testEmployeeRestResource() {
+	public void testGetSingleEmployeeRestResource() {
 		Client client = ClientBuilder.newClient();
 		Response response = client
 				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees/1").request("application/JSON")
@@ -139,6 +139,50 @@ public class RestClientTest1 {
 		// except for stream inputstream for example
 		System.out.println(result);// print out json string
 
+		response.close();
+	}
+	
+	@Test
+	public void testUpdatePutEmployee() {
+		Client client = ClientBuilder.newClient();
+		
+		Employee updatedEmployee = new Employee();
+		updatedEmployee.setJobRole("Producer");
+		updatedEmployee.setSalary(1234);
+		
+		Entity eEnttity = Entity.entity(updatedEmployee,"application/JSON");
+		
+		Response response = client.target("http://localhost:8080/EmployeeManagement/webservice/employees/444").request().buildPut(eEnttity).invoke();
+
+		System.out.println("Update status was " + response.getStatus());
+		System.out.println(response.readEntity(String.class));
+		
+		
+		response = client.target("http://localhost:8080/EmployeeManagement/webservice/employees")
+				.request("application/JSON").buildGet().invoke();
+		List<Employee> employees = response.readEntity(new GenericType<List<Employee>>() {});
+		
+		for (Employee e : employees) {
+			System.out.println(e + " "  + e.getJobRole() + " " + e.getSalary());
+		}
+	}
+	
+	@Test
+	public void testDeleteEmployee() {
+		Client client = ClientBuilder.newClient();
+		Response response = client
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees/203").request().buildDelete().invoke();
+		System.out.println("Delete status was " + response.getStatus());
+		
+		response.close();
+		
+		response = client
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees")
+				.request("application/JSON").buildGet().invoke();
+		String result = response.readEntity(String.class); // Note: readEntity most of the time will close connection
+		// except for stream inputstream for example
+		System.out.println(result);// print out json string
+		
 		response.close();
 	}
 	

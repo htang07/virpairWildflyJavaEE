@@ -64,5 +64,18 @@ public class EmployeeDataAccessProductionVersion implements EmployeeDataAccess {
 		List<Employee> employees = q.getResultList();
 		return employees;
 	}
+	
+	@Override
+	public void updateEmployee(int id, String jobRole, int salary) throws EmployeeNotFoundException {
+		Employee e = findById(id);
+		e.setJobRole(jobRole);
+		e.setSalary(salary);
+	}
+	
+	@Override
+	public void deleteEmployee(int id) throws EmployeeNotFoundException {
+		Employee e = findById(id);
+		em.remove(e);
+	}
 
 }

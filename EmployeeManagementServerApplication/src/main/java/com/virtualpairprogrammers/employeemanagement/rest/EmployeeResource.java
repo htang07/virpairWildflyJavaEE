@@ -6,9 +6,11 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -29,71 +31,102 @@ public class EmployeeResource {
 
 	@Inject
 	private EmployeeManagementServiceLocal service;
-	
-	//Returned Response type cannot handled corrected by JavaEE if returned content structure is application/XML
+
+	// Returned Response type cannot handled corrected by JavaEE if returned content
+	// structure is application/XML
 	@GET
-	@Produces(value={"application/JSON", "application/XML"})
-	public Response getAllEmployeesWhereIdBetween(@DefaultValue("0") @QueryParam("firstId") Integer firstId, @QueryParam("secondId") Integer secondId) {
-		
+	@Produces(value = { "application/JSON", "application/XML" })
+	public Response getAllEmployeesWhereIdBetween(@DefaultValue("0") @QueryParam("firstId") Integer firstId,
+			@QueryParam("secondId") Integer secondId) {
+
 		if (firstId == 0 && secondId == null) {
-			GenericEntity<List<Employee>> employees = new GenericEntity<List<Employee>>(service.getAllEmployees()) {};
+			GenericEntity<List<Employee>> employees = new GenericEntity<List<Employee>>(service.getAllEmployees()) {
+			};
 			return Response.ok(employees).build();
-			//return Response.ok(service.getAllEmployees()).build(); //Returned Response type cannot handled corrected by JavaEE if returned content structure is application/XML
+			// return Response.ok(service.getAllEmployees()).build(); //Returned Response
+			// type cannot handled corrected by JavaEE if returned content structure is
+			// application/XML
 		}
 		if (firstId != null && secondId != null) {
-			GenericEntity<List<Employee>> employees = new GenericEntity<List<Employee>>(service.getAllEmployeesWhereIdBetween(firstId, secondId)) {};
+			GenericEntity<List<Employee>> employees = new GenericEntity<List<Employee>>(
+					service.getAllEmployeesWhereIdBetween(firstId, secondId)) {
+			};
 			return Response.ok(employees).build();
-			//return Response.ok(service.getAllEmployeesWhereIdBetween(firstId, secondId)).build();
+			// return Response.ok(service.getAllEmployeesWhereIdBetween(firstId,
+			// secondId)).build();
 		}
 		return Response.status(400).build();
 	}
-	//this entry point is covered by getAllEmployeesWhereIdBetween method
-	//http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
+	// this entry point is covered by getAllEmployeesWhereIdBetween method
+	// http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
 //	@GET
 //	@Produces(value = {"application/JSON","application/XML"})
 //	public List<Employee> getAllEmployees() {
 //		return service.getAllEmployees();
 //	}
-	
-	//ex. http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
+
+	// ex.
+	// http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
 	@GET
-	@Produces(value = {"application/JSON","application/XML"})
+	@Produces(value = { "application/JSON", "application/XML" })
 	@Path("{employeeNo}")
 	public Response findEmployeeById(@PathParam("employeeNo") int id, @Context HttpHeaders headers) {
 		System.out.println("requested headers: " + headers.getRequestHeaders());
-	
+
 		try {
 			Employee result = service.getById(id);
 			return Response.ok(result).build();
 		} catch (EmployeeNotFoundException e) {
-			
+
 			System.out.println(e.getMessage());
-			
+
 			e.printStackTrace();
 			return Response.status(404).build();
 		}
 	}
-	
-	
- 
+
 	@POST
-	@Produces({"application/JSON", "application/XML"})
-	@Consumes(value={"application/JSON", "application/XML"})
+	@Produces({ "application/JSON", "application/XML" })
+	@Consumes(value = { "application/JSON", "application/XML" })
 	public Response createEmployee(Employee employee) {
 		try {
 			service.registerEmployee(employee);
-			
+
 			URI uri = null;
 			try {
 				uri = new URI("/employees/" + employee.getId());
+			} catch (Exception e) {
 			}
-			catch (Exception e) {}
-			
+
 			return Response.created(uri).entity(employee).build();
 		} catch (ServiceUnavailableException e) {
 			return Response.status(504).build();
 		}
 	}
 	
+	//http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
+	@PUT
+	@Path("{employeeNo}")
+	@Produces({ "application/JSON", "application/XML" })
+	@Consumes({ "application/JSON" })
+	public Response updateEmployee(@PathParam("employeeNo") int id, Employee e) {
+		try {
+			service.updateEmployee(id, e.getJobRole(), e.getSalary());
+			return Response.ok(service.getById(id)).build();
+		} catch (EmployeeNotFoundException e1) {
+			return Response.status(404).build();
+		}
+	}
+
+	@DELETE
+	@Path("{employeeNo}")
+	public Response deleteEmployee(@PathParam("employeeNo") int id) {
+		try {
+			service.deleteEmployee(id);
+			return Response.status(204).build();
+		} catch (EmployeeNotFoundException e) {
+			return Response.status(404).build();
+		}
+	}
 
 }
