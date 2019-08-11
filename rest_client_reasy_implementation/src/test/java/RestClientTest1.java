@@ -130,6 +130,19 @@ public class RestClientTest1 {
 	}
 	
 	@Test
+	public void testGetEmployeesByRange() {
+		Client client = ClientBuilder.newClient();
+		Response response = client
+				.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees?firstId=1&secondId=4")
+				.request("application/JSON").buildGet().invoke();
+		String result = response.readEntity(String.class); // Note: readEntity most of the time will close connection
+		// except for stream inputstream for example
+		System.out.println(result);// print out json string
+
+		response.close();
+	}
+	
+	@Test
 	public void testResponseMessageWithHeader() {
 		
 	}

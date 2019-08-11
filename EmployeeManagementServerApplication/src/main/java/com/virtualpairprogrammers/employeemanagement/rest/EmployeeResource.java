@@ -14,6 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
@@ -29,24 +30,30 @@ public class EmployeeResource {
 	@Inject
 	private EmployeeManagementServiceLocal service;
 	
+	//Returned Response type cannot handled corrected by JavaEE if returned content structure is application/XML
 	@GET
 	@Produces(value={"application/JSON", "application/XML"})
 	public Response getAllEmployeesWhereIdBetween(@DefaultValue("0") @QueryParam("firstId") Integer firstId, @QueryParam("secondId") Integer secondId) {
+		
 		if (firstId == 0 && secondId == null) {
-			return Response.ok(service.getAllEmployees()).build();
+			GenericEntity<List<Employee>> employees = new GenericEntity<List<Employee>>(service.getAllEmployees()) {};
+			return Response.ok(employees).build();
+			//return Response.ok(service.getAllEmployees()).build(); //Returned Response type cannot handled corrected by JavaEE if returned content structure is application/XML
 		}
 		if (firstId != null && secondId != null) {
-			return Response.ok(service.getAllEmployeesWhereIdBetween(firstId, secondId)).build();
+			GenericEntity<List<Employee>> employees = new GenericEntity<List<Employee>>(service.getAllEmployeesWhereIdBetween(firstId, secondId)) {};
+			return Response.ok(employees).build();
+			//return Response.ok(service.getAllEmployeesWhereIdBetween(firstId, secondId)).build();
 		}
 		return Response.status(400).build();
 	}
-	
+	//this entry point is covered by getAllEmployeesWhereIdBetween method
 	//http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
-	@GET
-	@Produces(value = {"application/JSON","application/XML"})
-	public List<Employee> getAllEmployees() {
-		return service.getAllEmployees();
-	}
+//	@GET
+//	@Produces(value = {"application/JSON","application/XML"})
+//	public List<Employee> getAllEmployees() {
+//		return service.getAllEmployees();
+//	}
 	
 	//ex. http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
 	@GET
@@ -68,25 +75,25 @@ public class EmployeeResource {
 	}
 	
 	
-	//this entry point is covered by getAllEmployeesWhereIdBetween method 
-//	@POST
-//	@Produces({"application/JSON", "application/XML"})
-//	@Consumes(value={"application/JSON", "application/XML"})
-//	public Response createEmployee(Employee employee) {
-//		try {
-//			service.registerEmployee(employee);
-//			
-//			URI uri = null;
-//			try {
-//				uri = new URI("/employees/" + employee.getId());
-//			}
-//			catch (Exception e) {}
-//			
-//			return Response.created(uri).entity(employee).build();
-//		} catch (ServiceUnavailableException e) {
-//			return Response.status(504).build();
-//		}
-//	}
-//	
+ 
+	@POST
+	@Produces({"application/JSON", "application/XML"})
+	@Consumes(value={"application/JSON", "application/XML"})
+	public Response createEmployee(Employee employee) {
+		try {
+			service.registerEmployee(employee);
+			
+			URI uri = null;
+			try {
+				uri = new URI("/employees/" + employee.getId());
+			}
+			catch (Exception e) {}
+			
+			return Response.created(uri).entity(employee).build();
+		} catch (ServiceUnavailableException e) {
+			return Response.status(504).build();
+		}
+	}
+	
 
 }
