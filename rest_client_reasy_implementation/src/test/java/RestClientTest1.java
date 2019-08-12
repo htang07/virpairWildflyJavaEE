@@ -142,23 +142,27 @@ public class RestClientTest1 {
 		response.close();
 	}
 	
+	
+	//TODO need figure out how to configure wildfly to support http put operation.
+	//currently http 405 will be thrown
 	@Test
 	public void testUpdatePutEmployee() {
 		Client client = ClientBuilder.newClient();
 		
 		Employee updatedEmployee = new Employee();
 		updatedEmployee.setJobRole("Producer");
-		updatedEmployee.setSalary(1234);
+		updatedEmployee.setSalary(80000);
 		
 		Entity eEnttity = Entity.entity(updatedEmployee,"application/JSON");
 		
-		Response response = client.target("http://localhost:8080/EmployeeManagement/webservice/employees/444").request().buildPut(eEnttity).invoke();
+		//lookup existing employee with id then update attributes
+		Response response = client.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees/4").request("application/JSON").buildPut(eEnttity).invoke();
 
 		System.out.println("Update status was " + response.getStatus());
 		System.out.println(response.readEntity(String.class));
 		
 		
-		response = client.target("http://localhost:8080/EmployeeManagement/webservice/employees")
+		response = client.target("http://localhost:8080/EmployeeManagementServerApplication/webservice/employees")
 				.request("application/JSON").buildGet().invoke();
 		List<Employee> employees = response.readEntity(new GenericType<List<Employee>>() {});
 		

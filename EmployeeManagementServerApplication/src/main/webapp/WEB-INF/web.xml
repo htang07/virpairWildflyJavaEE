@@ -8,6 +8,11 @@
 		<servlet-name>javax.ws.rs.core.Application</servlet-name>
 		<url-pattern>/webservice/*</url-pattern>
 	</servlet-mapping>
+	
+	<!--  <context-param> 
+        <param-name>resteasy.providers</param-name>
+        <param-value>br.com.tasks.rest.CORSFilter</param-value>
+    </context-param>
 	<security-constraint>
 		<web-resource-collection
 			id="WebResourceCollection_1">
@@ -19,8 +24,8 @@
 			<http-method>DELETE</http-method>
 			<http-method>TRACE</http-method>
 		</web-resource-collection>
-		<!-- <user-data-constraint id="UserDataConstraint_1">
+		<user-data-constraint id="UserDataConstraint_1">
 			<transport-guarantee>NONE</transport-guarantee>
-		</user-data-constraint> -->
-	</security-constraint>
+		</user-data-constraint>
+	</security-constraint> -->
 </web-app>

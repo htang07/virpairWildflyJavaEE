@@ -105,8 +105,10 @@ public class EmployeeResource {
 	}
 	
 	//http://localhost:8080/EmployeeManagementServerApplication/webservice/employees
+	
 	@PUT
 	@Path("{employeeNo}")
+//	@Path("/employee/{employeeNo}")
 	@Produces({ "application/JSON", "application/XML" })
 	@Consumes({ "application/JSON" })
 	public Response updateEmployee(@PathParam("employeeNo") int id, Employee e) {
@@ -116,6 +118,7 @@ public class EmployeeResource {
 		} catch (EmployeeNotFoundException e1) {
 			return Response.status(404).build();
 		}
+		
 	}
 
 	@DELETE
