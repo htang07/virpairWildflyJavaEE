@@ -1,3 +1,4 @@
+-----Developed for wildfly 10.x server
 ---install wildfly plugin to eclipse
 https://www.baeldung.com/eclipse-wildfly-configuration
 

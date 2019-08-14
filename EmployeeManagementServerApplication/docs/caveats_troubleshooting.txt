@@ -1,0 +1,1 @@
+Note: wildfly web console page may not work with chrome.

@@ -1,0 +1,3 @@
+Create JMS QUEUE
+Name*: BookStoreQueue
+JNDI Names*: java:jboss/exported/jms/BookStoreQueue
